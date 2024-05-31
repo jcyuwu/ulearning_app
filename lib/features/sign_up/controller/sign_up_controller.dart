@@ -2,8 +2,10 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:ulearning_app/common/global_loader/global_loader.dart';
 import 'package:ulearning_app/common/widgets/popup_messages.dart';
-import 'package:ulearning_app/pages/sign_up/notifier/register_notifier.dart';
+import 'package:ulearning_app/features/sign_up/provider/notifier/register_notifier.dart';
+import 'package:ulearning_app/features/sign_up/repo/sign_up_repo.dart';
 
 class SignUpController {
   late WidgetRef ref;
@@ -45,10 +47,12 @@ class SignUpController {
       return;
     }
 
+    ref.read(appLoaderProvider.notifier).setLoaderValue(true);
+    // Future.delayed(Duration(seconds: 2), () {});
+
     var context = Navigator.of(ref.context);
     try {
-      final credential = await FirebaseAuth.instance
-          .createUserWithEmailAndPassword(email: email, password: password);
+      final credential = await SignUpRepo.firebaseSignUp(email, password);
 
       if (kDebugMode) {
         print(credential);
@@ -61,10 +65,24 @@ class SignUpController {
         toastInfo("An email has been to verify your account. Please open that email and confirm your identity");
         context.pop();
       }
+    } on FirebaseAuthException catch (e) {
+      if (e.code == "weak-password") {
+        toastInfo("The password is too weak");
+      } else if (e.code == "email-already-use") {
+        toastInfo("This email address has already registered");
+      } else if (e.code == "user-not-found") {
+        toastInfo("User not found");
+      } else {
+        if (kDebugMode) {
+          print(e.code);
+        }
+      }
     } catch (e) {
       if (kDebugMode) {
         print(e);
       }
     }
+
+    ref.watch(appLoaderProvider.notifier).setLoaderValue(false);
   }
 }

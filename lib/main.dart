@@ -1,14 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:ulearning_app/common/routes/routes.dart';
 import 'package:ulearning_app/common/utils/app_styles.dart';
-import 'package:ulearning_app/pages/sign_in/sign_in.dart';
-import 'package:ulearning_app/pages/sign_up/sign_up.dart';
-import 'package:ulearning_app/pages/welcome/welcome.dart';
+import 'package:ulearning_app/features/global.dart';
 
-void main() {
+Future<void> main() async {
+  await Global.init();
   runApp(const ProviderScope(child: MyApp()));
 }
+
+// var routesMap = {
+//   AppRoutesNames.WELCOME: (context) => Welcome(),
+//   AppRoutesNames.SIGN_IN: (context) => const SignIn(),
+//   AppRoutesNames.REGISTER: (context) => const SignUp(),
+//   AppRoutesNames.APPLICATION: (context) => const Application(),
+// };
+
+final GlobalKey<NavigatorState> navKey = GlobalKey<NavigatorState>();
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -23,14 +32,12 @@ class MyApp extends StatelessWidget {
         // Use builder only if you need to use library outside ScreenUtilInit context
         builder: (context, child) {
           return MaterialApp(
+            navigatorKey: navKey,
             title: 'Flutter Demo',
             theme: AppTheme.appThemeData,
-            initialRoute: "/",
-            routes: {
-              "/":(context) => Welcome(),
-              "/signIn": (context) => const SignIn(),
-              "/register": (context) => const SignUp(),
-            },
+            onGenerateRoute: AppPages.generateRouteSettings,
+            //initialRoute: "/",
+            //routes: routesMap,
             //home: Welcome(),
           );
         });

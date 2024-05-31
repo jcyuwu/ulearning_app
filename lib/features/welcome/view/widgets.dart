@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:ulearning_app/common/utils/constants.dart';
 import 'package:ulearning_app/common/widgets/app_shadow.dart';
 import 'package:ulearning_app/common/widgets/text_widgets.dart';
+import 'package:ulearning_app/features/global.dart';
 
 Widget appOnboardingPage(PageController controller,
     {String imagePath = "assets/images/reading.png",
@@ -36,11 +38,9 @@ Widget _nextButton(int index, PageController controller, BuildContext context) {
               duration: const Duration(milliseconds: 300),
               curve: Curves.linear);
         } else {
-          Navigator.pushNamed(context, "/signIn");
-          // Navigator.push(
-          //     context,
-          //     MaterialPageRoute(
-          //         builder: (BuildContext context) => const SignIn()));
+          Global.storageService.setBool(AppConstants.STORAGE_DEVICE_OPEN_FIRST_KEY, true);
+
+          Navigator.pushNamed(context, "/sign_in");
         }
       },
       child: Container(
