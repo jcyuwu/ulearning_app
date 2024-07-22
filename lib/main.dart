@@ -7,6 +7,21 @@ import 'package:ulearning_app/features/global.dart';
 
 Future<void> main() async {
   await Global.init();
+
+  // var obj1 = HttpUtil();
+  // var obj2 = HttpUtil();
+  // if (obj1.hashCode == obj2.hashCode) {
+  //   print("I am the singleton class");
+  // }
+
+  // HttpUtil().post("api/login", queryParameters: {
+  //   "name" : "eeee",
+  //   "email": "eeee@e.com",
+  //   "avatar": "xyz.com",
+  //   "open_id": "dawdad awdadas",
+  //   "type": 2,
+  // });
+
   runApp(const ProviderScope(child: MyApp()));
 }
 

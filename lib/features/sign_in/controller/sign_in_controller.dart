@@ -1,8 +1,10 @@
+import 'dart:convert';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:ulearning_app/common/entities/user.dart';
+import 'package:ulearning_app/common/models/user.dart';
 import 'package:ulearning_app/common/global_loader/global_loader.dart';
 import 'package:ulearning_app/common/utils/constants.dart';
 import 'package:ulearning_app/common/widgets/popup_messages.dart';
@@ -89,25 +91,37 @@ class SignInController {
     ref.read(appLoaderProvider.notifier).setLoaderValue(false);
   }
 
-  void asyncPostAllData(LoginRequestEntity loginRequestEntity) {
-    try {
-      //var navigator = Navigator.of(ref.context);
+  Future<void> asyncPostAllData(LoginRequestEntity loginRequestEntity) async {
+    var result = await SignInRepo.login(params: loginRequestEntity);
+    if (result.code==200) {
+      try {
+        //var navigator = Navigator.of(ref.context);
+        // Global.storageService.setString(
+        //     AppConstants.STORAGE_USER_PROFILE_KEY,
+        //     jsonEncode(
+        //         {"name": "jcy256", "email": "jcyu256@gmail.com", "age": 34}));
+        // Global.storageService
+        //     .setString(AppConstants.STORAGE_USER_TOKEN_KEY, "123456");
+        Global.storageService.setString(
+            AppConstants.STORAGE_USER_PROFILE_KEY,
+            jsonEncode(
+                result.data));
+        Global.storageService
+            .setString(AppConstants.STORAGE_USER_TOKEN_KEY, result.data!.access_token!);
 
-      Global.storageService
-          .setString(AppConstants.STORAGE_USER_PROFILE_KEY, "123");
-      Global.storageService
-          .setString(AppConstants.STORAGE_USER_TOKEN_KEY, "123456");
-
-      
-      navKey.currentState?.pushNamedAndRemoveUntil("/application", (route) => false);
-      // navigator.push(MaterialPageRoute(
-      //   builder: (BuildContext context) => Scaffold(appBar: AppBar(), body: const Application(),),
-      // ));
-      //navigator.pushNamed("/application");
-    } catch (e) {
-      if (kDebugMode) {
-        print(e);
+        navKey.currentState
+            ?.pushNamedAndRemoveUntil("/application", (route) => false);
+        // navigator.push(MaterialPageRoute(
+        //   builder: (BuildContext context) => Scaffold(appBar: AppBar(), body: const Application(),),
+        // ));
+        //navigator.pushNamed("/application");
+      } catch (e) {
+        if (kDebugMode) {
+          print(e);
+        }
       }
+    } else {
+      toastInfo("Login error");
     }
   }
 }

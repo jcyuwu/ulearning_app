@@ -53,8 +53,8 @@ class _SignInState extends ConsumerState<SignIn> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       thirdPartyLogin(),
-                      Center(
-                        child: text14Normal(
+                      const Center(
+                        child: Text14Normal(
                             text: "Or use your email account to login"),
                       ),
                       SizedBox(

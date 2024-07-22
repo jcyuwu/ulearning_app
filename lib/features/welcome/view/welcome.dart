@@ -2,6 +2,7 @@ import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:ulearning_app/common/utils/image_res.dart';
 import 'package:ulearning_app/features/welcome/provider/notifier/welcome_notifier.dart';
 import 'package:ulearning_app/features/welcome/view/widgets.dart';
 
@@ -35,22 +36,22 @@ class Welcome extends ConsumerWidget {
                       controller: _controller,
                       scrollDirection: Axis.horizontal,
                       children: [
-                        appOnboardingPage(_controller,
-                            imagePath: "assets/images/reading.png",
+                        AppOnboardingPage(controller: _controller,
+                            imagePath: ImageRes.reading,
                             title: "First See Learning",
                             subTitle:
                                 "Forget about the paper, now learning all in one place",
                             index: 1,
                             context: context),
-                        appOnboardingPage(_controller,
-                            imagePath: "assets/images/man.png",
+                        AppOnboardingPage(controller: _controller,
+                            imagePath: ImageRes.man,
                             title: "Connect With Everyone",
                             subTitle:
                                 "Always keep in touch with your tutor and friends. Let's get connected",
                             index: 2,
                             context: context),
-                        appOnboardingPage(_controller,
-                            imagePath: "assets/images/boy.png",
+                        AppOnboardingPage(controller: _controller,
+                            imagePath: ImageRes.boy,
                             title: "Always Fascinated Learning",
                             subTitle:
                                 "Anywhere, anytime. The time is at your discretion. So study wherever you can",
