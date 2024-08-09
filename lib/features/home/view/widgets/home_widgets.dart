@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:ulearning_app/common/routes/app_routes_names.dart';
 import 'package:ulearning_app/common/utils/app_colors.dart';
 import 'package:ulearning_app/common/utils/constants.dart';
 import 'package:ulearning_app/common/utils/image_res.dart';
@@ -237,22 +238,54 @@ class HomeMenuBar extends StatelessWidget {
 }
 
 class CourseItemGrid extends StatelessWidget {
-  const CourseItemGrid({super.key});
+  final WidgetRef ref;
+  const CourseItemGrid({super.key, required this.ref});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: GridView.builder(
-        physics: const ScrollPhysics(),
-        shrinkWrap: true,
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2,
-          crossAxisSpacing: 40,
-          mainAxisSpacing: 40,
-        ),
-        itemCount: 6,
-        itemBuilder: (_, int index) {
-          return appImage();
+    final courseState = ref.watch(homeCourseListProvider);
+    return Padding(
+      padding: EdgeInsets.symmetric(vertical: 18.h, horizontal: 0),
+      child: courseState.when(
+        data: (data) {
+          return GridView.builder(
+            physics: const ScrollPhysics(),
+            shrinkWrap: true,
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+              crossAxisSpacing: 15,
+              mainAxisSpacing: 15,
+              childAspectRatio: 1.6,
+            ),
+            itemCount: data?.length,
+            itemBuilder: (_, int index) {
+              return AppBoxDecorationImage(
+                imagePath:
+                    "${AppConstants.IMAGE_UPLOADS_PATH}${data![index].thumbnail!}",
+                fit: BoxFit.fitWidth,
+                courseItem: data[index],
+                func: () {
+                  Navigator.of(context).pushNamed(AppRoutesNames.COURSE_DETAIL, arguments: {
+                     "id":data[index].id
+                  });
+                },
+              );
+            },
+          );
+        },
+        error: (error, stackTrace) {
+          if (kDebugMode) {
+            print(error.toString());
+            print(stackTrace.toString());
+          }
+          return const Center(
+            child: Text("Error loading data"),
+          );
+        },
+        loading: () {
+          return const Center(
+            child: Text("loading.. "),
+          );
         },
       ),
     );

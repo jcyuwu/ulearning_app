@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:ulearning_app/common/models/course_entities.dart';
 import 'package:ulearning_app/common/utils/app_colors.dart';
 import 'package:ulearning_app/common/utils/image_res.dart';
+import 'package:ulearning_app/common/widgets/text_widgets.dart';
 
 BoxDecoration appBoxShadow({
   Color color = AppColors.primaryElement,
@@ -62,20 +64,56 @@ class AppBoxDecorationImage extends StatelessWidget {
   final double width;
   final double height;
   final String imagePath;
-  const AppBoxDecorationImage({super.key, this.width = 40, this.height = 40, this.imagePath = ImageRes.profile});
+  final BoxFit fit;
+  final CourseItem? courseItem;
+  final Function()? func; 
+  const AppBoxDecorationImage({
+    super.key,
+    this.width = 40,
+    this.height = 40,
+    this.imagePath = ImageRes.profile,
+    this.fit = BoxFit.fitHeight,
+    this.courseItem,
+    this.func,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: width,
-      height: height,
-      decoration: BoxDecoration(
-        image: DecorationImage(
-          fit: BoxFit.fitHeight,
-          image: NetworkImage(imagePath),
-          //image: AssetImage(imagePath),
+    return GestureDetector(
+      onTap: func,
+      child: Container(
+        width: width,
+        height: height,
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            fit: fit,
+            image: NetworkImage(imagePath),
+            //image: AssetImage(imagePath),
+          ),
+          borderRadius: BorderRadius.circular(20.w),
         ),
-        borderRadius: BorderRadius.circular(20.w),
+        child: courseItem == null
+            ? Container()
+            : Column(
+                mainAxisAlignment: MainAxisAlignment.end,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    margin: EdgeInsets.only(left: 20.w),
+                    child: FadeText(
+                      text: courseItem!.name!,
+                    ),
+                  ),
+                  Container(
+                    margin: EdgeInsets.only(left: 20.w, bottom: 30.h),
+                    child: FadeText(
+                      text: "${courseItem!.lesson_num!} Lessons",
+                      color: AppColors.primaryFourthElementText,
+                      fontSize: 8,
+                    ),
+                  ),
+                ],
+              ),
       ),
     );
   }

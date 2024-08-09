@@ -23,7 +23,22 @@ Future<void> main() async {
   // });
 
   runApp(const ProviderScope(child: MyApp()));
+
+  // var person = Person("dbestech", 3);
+  // var x = person("xyz");
+  // print(x.name);
 }
+
+// class Person {
+//   String name;
+//   int age;
+//   Person(this.name, this.age);
+
+//   Person call(String address) {
+//     print(address);
+//     return this;
+//   }  
+// }
 
 // var routesMap = {
 //   AppRoutesNames.WELCOME: (context) => Welcome(),

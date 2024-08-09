@@ -53,48 +53,52 @@ class _HomeState extends ConsumerState<Home> {
     //         ),
     //       );
     return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: homeAppBar(ref),
-      body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 25.w),
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(height: 20.h),
-              const HelloText(),
-              const UserName(),
-              SizedBox(height: 20.h),
-              searchBar(),
-              SizedBox(height: 20.h),
-              HomeBanner(ref: ref, controller: _controller),
-              const HomeMenuBar(),
-              // CustomScrollView(
-              //   physics: const ScrollPhysics(),
-              //   shrinkWrap: true,
-              //   slivers: [
-              //     SliverPadding(
-              //       padding: const EdgeInsets.all(20),
-              //       sliver: SliverGrid.count(
-              //         crossAxisCount: 3,
-              //         crossAxisSpacing: 40,
-              //         children: const [
-              //           Text("Hello I love flutter"),
-              //           Text("Hello I love flutter"),
-              //           Text("Hello I love flutter"),
-              //           Text("Hello I love flutter"),
-              //           Text("Hello I love flutter"),
-              //         ],
-              //       ),
-              //     ),
-              //   ],
-              // ),
-              const CourseItemGrid(),
-            ],
+        backgroundColor: Colors.white,
+        appBar: homeAppBar(ref),
+        body: RefreshIndicator(
+          onRefresh: () {
+            return ref.refresh(homeCourseListProvider.notifier).fetchCourseList(); 
+          },
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 25.w),
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(height: 20.h),
+                  const HelloText(),
+                  const UserName(),
+                  SizedBox(height: 20.h),
+                  searchBar(),
+                  SizedBox(height: 20.h),
+                  HomeBanner(ref: ref, controller: _controller),
+                  const HomeMenuBar(),
+                  // CustomScrollView(
+                  //   physics: const ScrollPhysics(),
+                  //   shrinkWrap: true,
+                  //   slivers: [
+                  //     SliverPadding(
+                  //       padding: const EdgeInsets.all(20),
+                  //       sliver: SliverGrid.count(
+                  //         crossAxisCount: 3,
+                  //         crossAxisSpacing: 40,
+                  //         children: const [
+                  //           Text("Hello I love flutter"),
+                  //           Text("Hello I love flutter"),
+                  //           Text("Hello I love flutter"),
+                  //           Text("Hello I love flutter"),
+                  //           Text("Hello I love flutter"),
+                  //         ],
+                  //       ),
+                  //     ),
+                  //   ],
+                  // ),
+                  CourseItemGrid(ref: ref),
+                ],
+              ),
+            ),
           ),
-        ),
-      ),
-    );
+        ));
   }
 }
