@@ -14,6 +14,29 @@ Widget text24Normal(
   );
 }
 
+class Text13Normal extends StatelessWidget {
+  final String text;
+  final Color color;
+  final FontWeight fontWeight;
+  final TextAlign? textAlign;
+  const Text13Normal({
+    super.key,
+    this.text = "",
+    this.color = AppColors.primaryText,
+    this.fontWeight = FontWeight.bold,
+    this.textAlign = TextAlign.start,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      text,
+      textAlign: textAlign,
+      style: TextStyle(color: color, fontSize: 13.sp, fontWeight: fontWeight),
+    );
+  }
+}
+
 // Widget text16Normal(
 //     {String text = "", Color color = AppColors.primarySecondaryElementText}) {
 //   return Text(
@@ -28,17 +51,20 @@ class Text16Normal extends StatelessWidget {
   final String text;
   final Color color;
   final FontWeight fontWeight;
+  final TextAlign?  textAlign;
   const Text16Normal(
       {super.key,
       this.text = "",
       this.color = AppColors.primarySecondaryElementText,
-      this.fontWeight = FontWeight.normal});
+      this.fontWeight = FontWeight.normal,
+      this.textAlign = TextAlign.center,
+      });
 
   @override
   Widget build(BuildContext context) {
     return Text(
       text,
-      textAlign: TextAlign.center,
+      textAlign: textAlign,
       style: TextStyle(color: color, fontSize: 16.sp, fontWeight: fontWeight),
     );
   }
@@ -57,11 +83,13 @@ class Text16Normal extends StatelessWidget {
 class Text14Normal extends StatelessWidget {
   final String text;
   final Color color;
-
+  final FontWeight fontWeight;
   const Text14Normal(
       {super.key,
       this.text = "",
-      this.color = AppColors.primaryThridElementText});
+      this.color = AppColors.primaryThridElementText,
+      this.fontWeight = FontWeight.normal,
+      });
 
   @override
   Widget build(BuildContext context) {
@@ -69,7 +97,7 @@ class Text14Normal extends StatelessWidget {
       text,
       textAlign: TextAlign.start,
       style: TextStyle(
-          color: color, fontSize: 14.sp, fontWeight: FontWeight.normal),
+          color: color, fontSize: 14.sp, fontWeight: fontWeight),
     );
   }
 }
@@ -107,7 +135,9 @@ class Text10Normal extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       text,
-      textAlign: TextAlign.start,
+      overflow: TextOverflow.ellipsis,
+      maxLines: 1,
+      textAlign: TextAlign.start, 
       style: TextStyle(
           color: color, fontSize: 10.sp, fontWeight: FontWeight.normal),
     );

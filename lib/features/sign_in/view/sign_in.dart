@@ -93,7 +93,7 @@ class _SignInState extends ConsumerState<SignIn> {
                         height: 100.h,
                       ),
                       Center(
-                        child: appButton(
+                        child: AppButton(
                           buttonName: "Login",
                           context: context,
                           func: () => _controller.handleSignIn(ref),
@@ -103,7 +103,7 @@ class _SignInState extends ConsumerState<SignIn> {
                         height: 20.h,
                       ),
                       Center(
-                        child: appButton(
+                        child: AppButton(
                             buttonName: "Register",
                             isLogin: false,
                             context: context,

@@ -79,17 +79,17 @@ Widget appScreens({int index = 0}) {
     //       appImage(imagePath: ImageRes.profile, width: 250, height: 250),
     // ),
     const Home(),
-    Center(
-      child: appImage(imagePath: ImageRes.search, width: 250, height: 250),
+    const Center(
+      child: AppImage(imagePath: ImageRes.search, width: 250, height: 250),
     ),
-    Center(
-      child: appImage(imagePath: ImageRes.play, width: 250, height: 250),
+    const Center(
+      child: AppImage(imagePath: ImageRes.play, width: 250, height: 250),
     ),
-    Center(
-      child: appImage(imagePath: ImageRes.message, width: 250, height: 250),
+    const Center(
+      child: AppImage(imagePath: ImageRes.message, width: 250, height: 250),
     ),
-    Center(
-      child: appImage(imagePath: ImageRes.profile, width: 250, height: 250),
+    const Center(
+      child: AppImage(imagePath: ImageRes.profile, width: 250, height: 250),
     ),
   ];
   return screens[index];

@@ -14,7 +14,7 @@ BoxDecoration appBoxShadow({
 }) {
   return BoxDecoration(
       color: color,
-      borderRadius: BorderRadius.circular(radius),
+      borderRadius: BorderRadius.circular(radius.w),
       border: boxBorder,
       boxShadow: [
         BoxShadow(
@@ -66,7 +66,7 @@ class AppBoxDecorationImage extends StatelessWidget {
   final String imagePath;
   final BoxFit fit;
   final CourseItem? courseItem;
-  final Function()? func; 
+  final Function()? func;
   const AppBoxDecorationImage({
     super.key,
     this.width = 40,
@@ -117,4 +117,12 @@ class AppBoxDecorationImage extends StatelessWidget {
       ),
     );
   }
+}
+
+BoxDecoration networkImageDecoration({required String imagePath}) {
+  return BoxDecoration(
+    image: DecorationImage(
+      image: NetworkImage(imagePath),
+    ),
+  );
 }
